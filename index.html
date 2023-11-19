@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Proyecto</title>
+  </head>
+  <body>
+    <main class="main-container">
+      <div class="visor-container">
+        <video autoplay playsinline muted class="webCam" id="webcam"></video>
+
+        <div class="result-container">
+          <h3 class="result-title">Predicción</h3>
+          <div class="result" id="result">
+            <p>Cargando...</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="training-container">
+        <div class="controller-buttons">
+          <button class="controller-btn btn" id="btnLoad">Cargar</button>
+          <button class="controller-btn btn" id="btnTraining">Entrenar</button>
+          <button class="controller-btn btn" id="btnSave" disabled>Guardar</button>
+        </div>
+
+        <div class="training-buttons">
+          <button class="training-btn btn" data-position="1">A</button>
+          <button class="training-btn btn" data-position="2">B</button>
+          <button class="training-btn btn" data-position="3">C</button>
+          <button class="training-btn btn" data-position="4">D</button>
+          <button class="training-btn btn" data-position="5">E</button>
+          <button class="training-btn btn" data-position="6">F</button>
+          <button class="training-btn btn" data-position="7">G</button>
+          <button class="training-btn btn" data-position="8">H</button>
+          <button class="training-btn btn" data-position="9">I</button>
+          <button class="training-btn btn" data-position="10">J</button>
+          <button class="training-btn btn" data-position="11">K</button>
+          <button class="training-btn btn" data-position="12">L</button>
+          <button class="training-btn btn" data-position="13">M</button>
+          <button class="training-btn btn" data-position="14">N</button>
+          <button class="training-btn btn" data-position="15">Ñ</button>
+          <button class="training-btn btn" data-position="16">O</button>
+          <button class="training-btn btn" data-position="17">P</button>
+          <button class="training-btn btn" data-position="18">Q</button>
+          <button class="training-btn btn" data-position="19">R</button>
+          <button class="training-btn btn" data-position="20">S</button>
+          <button class="training-btn btn" data-position="21">T</button>
+          <button class="training-btn btn" data-position="22">U</button>
+          <button class="training-btn btn" data-position="23">V</button>
+          <button class="training-btn btn" data-position="24">W</button>
+          <button class="training-btn btn" data-position="25">X</button>
+          <button class="training-btn btn" data-position="26">Y</button>
+          <button class="training-btn btn" data-position="27">Z</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
