@@ -20,8 +20,12 @@ Para el funcionamiento de la aplicación web se recomienda ejecutar a través de
 4. Realizar el reconocimiento de palabras compuestas del alfabeto de señas.
 5. La aplicación web irá prediciendo las letras y palabras compuestas del alfabeto de señas con un porcentaje de confianza.
 
+## Alfabeto en lengua de señas
+
+![Alfabeto de señas](./assets/alfabeto.webp)
+
 ## Integrantes
 
 - Daniela Trejo Cañas
-- Gustavo Alonso Pascual Andrade
 - Axel Rubén Palacios García
+- Gustavo Alonso Pascual Andrade

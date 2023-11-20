@@ -7,56 +7,136 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier"></script>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="./assets/icon.png" type="image/png" sizes="32x32" />
     <title>Proyecto</title>
   </head>
   <body>
-    <main class="main-container">
-      <div class="visor-container">
-        <video autoplay playsinline muted class="webCam" id="webcam"></video>
+    <main>
+      <div class="container">
+        <div class="visor-container">
+          <video autoplay playsinline muted class="webCam" id="webcam"></video>
 
-        <div class="result-container">
-          <h3 class="result-title">Predicción</h3>
           <div class="result" id="result">
-            <p>Cargando...</p>
+            <p>Cargando clasificador de MobileNet. Espere un momento...</p>
+          </div>
+        </div>
+
+        <div class="training-container">
+          <div class="controller-buttons">
+            <button class="btn btnLoad" id="btnLoad">Cargar</button>
+            <button class="btn btnTraining" id="btnTraining">Entrenar</button>
+            <button class="btn btnSave" id="btnSave" disabled>Guardar</button>
+          </div>
+
+          <div class="training-buttons">
+            <button class="btn btnAlph">A</button>
+            <button class="btn btnAlph">B</button>
+            <button class="btn btnAlph">C</button>
+            <button class="btn btnAlph">D</button>
+            <button class="btn btnAlph">E</button>
+            <button class="btn btnAlph">F</button>
+            <button class="btn btnAlph">G</button>
+            <button class="btn btnAlph">H</button>
+            <button class="btn btnAlph">I</button>
+            <button class="btn btnAlph">J</button>
+            <button class="btn btnAlph">K</button>
+            <button class="btn btnAlph">L</button>
+            <button class="btn btnAlph">M</button>
+            <button class="btn btnAlph">N</button>
+            <button class="btn btnAlph">Ñ</button>
+            <button class="btn btnAlph">O</button>
+            <button class="btn btnAlph">P</button>
+            <button class="btn btnAlph">Q</button>
+            <button class="btn btnAlph">R</button>
+            <button class="btn btnAlph">S</button>
+            <button class="btn btnAlph">T</button>
+            <button class="btn btnAlph">U</button>
+            <button class="btn btnAlph">V</button>
+            <button class="btn btnAlph">W</button>
+            <button class="btn btnAlph">X</button>
+            <button class="btn btnAlph">Y</button>
+            <button class="btn btnAlph">Z</button>
+          </div>
+
+          <div class="input-container">
+            <input
+              type="text"
+              class="fieldInput"
+              id="fieldInput"
+              placeholder="Ingrese una palabra"
+            />
+            <button class="btn btnInput" id="btnInput">Aprender</button>
           </div>
         </div>
       </div>
 
-      <div class="training-container">
-        <div class="controller-buttons">
-          <button class="controller-btn btn" id="btnLoad">Cargar</button>
-          <button class="controller-btn btn" id="btnTraining">Entrenar</button>
-          <button class="controller-btn btn" id="btnSave" disabled>Guardar</button>
+      <div class="alph-container">
+        <h2 class="alph-title">Alfabeto</h2>
+
+        <div class="img-container">
+          <img class="alph-img" src="./assets/alfabeto.webp" alt="Alfabeto" />
+        </div>
+      </div>
+
+      <div class="instr-container">
+        <h2 class="instr-title">Instrucciones</h2>
+
+        <div>
+          <h3 class="instr-subtitle">Cargar</h3>
+          <p class="instr-text">
+            Si ya tienes un modelo guardado, puedes cargarlo con este botón.
+            Debe ser un archivo JSON.
+          </p>
         </div>
 
-        <div class="training-buttons">
-          <button class="training-btn btn" data-position="1">A</button>
-          <button class="training-btn btn" data-position="2">B</button>
-          <button class="training-btn btn" data-position="3">C</button>
-          <button class="training-btn btn" data-position="4">D</button>
-          <button class="training-btn btn" data-position="5">E</button>
-          <button class="training-btn btn" data-position="6">F</button>
-          <button class="training-btn btn" data-position="7">G</button>
-          <button class="training-btn btn" data-position="8">H</button>
-          <button class="training-btn btn" data-position="9">I</button>
-          <button class="training-btn btn" data-position="10">J</button>
-          <button class="training-btn btn" data-position="11">K</button>
-          <button class="training-btn btn" data-position="12">L</button>
-          <button class="training-btn btn" data-position="13">M</button>
-          <button class="training-btn btn" data-position="14">N</button>
-          <button class="training-btn btn" data-position="15">Ñ</button>
-          <button class="training-btn btn" data-position="16">O</button>
-          <button class="training-btn btn" data-position="17">P</button>
-          <button class="training-btn btn" data-position="18">Q</button>
-          <button class="training-btn btn" data-position="19">R</button>
-          <button class="training-btn btn" data-position="20">S</button>
-          <button class="training-btn btn" data-position="21">T</button>
-          <button class="training-btn btn" data-position="22">U</button>
-          <button class="training-btn btn" data-position="23">V</button>
-          <button class="training-btn btn" data-position="24">W</button>
-          <button class="training-btn btn" data-position="25">X</button>
-          <button class="training-btn btn" data-position="26">Y</button>
-          <button class="training-btn btn" data-position="27">Z</button>
+        <div>
+          <h3 class="instr-subtitle">Entrenar</h3>
+          <p class="instr-text">
+            Para entrenar el modelo, debemos realizar los siguientes pasos:
+          </p>
+          <ol class="instr-steps">
+            <li>
+              Seleccionar la letra que deseas entrenar. Por ejemplo, la letra A.
+            </li>
+            <li>
+              Presionar el botón de entrenar y realizar el gesto de la letra A.
+            </li>
+            <li>
+              Repetir el paso 2 varias veces, hasta que el modelo aprenda a
+              reconocer la letra A.
+            </li>
+            <li>
+              Repetir el proceso hasta que el modelo aprenda a reconocer todas
+              las letras.
+            </li>
+          </ol>
+
+          <p class="instr-text">
+            Para agregar una palabra, se debe realizar lo siguiente:
+          </p>
+          <ol class="instr-steps">
+            <li>
+              Ingresar la palabra en el campo de texto y realizar el gesto de la
+              palabra.
+            </li>
+            <li>
+              Presionar el botón de aprender varias veces, hasta que el modelo
+              aprenda a reconocer la palabra.
+            </li>
+            <li>
+              Agregar todas las palabras que se deseen, repitiendo el proceso
+              anterior.
+            </li>
+          </ol>
+        </div>
+
+        <div class="instr-save">
+          <h3 class="instr-subtitle">Guardar</h3>
+          <p class="instr-text">
+            Una vez que el modelo ha aprendido a reconocer todas las letras,
+            podemos guardarlo con este botón. El modelo se guardará en un
+            archivo JSON.
+          </p>
         </div>
       </div>
     </main>

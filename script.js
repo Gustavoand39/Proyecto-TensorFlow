@@ -6,51 +6,25 @@ const classifier = knnClassifier.create();
 // Botones para el entrenamiento y la carga del modelo
 const btnLoad = document.getElementById("btnLoad"),
   btnSave = document.getElementById("btnSave"),
-  btnTraining = document.getElementById("btnTraining");
+  btnTraining = document.getElementById("btnTraining"),
+  btnInput = document.getElementById("btnInput");
 
 // Indica si el modelo se está entrenando o no
 let isTraining = false;
 
-const classes = {
-  1: "A",
-  2: "B",
-  3: "C",
-  4: "D",
-  5: "E",
-  6: "F",
-  7: "G",
-  8: "H",
-  9: "I",
-  10: "J",
-  11: "K",
-  12: "L",
-  13: "M",
-  14: "N",
-  15: "Ñ",
-  16: "O",
-  17: "P",
-  18: "Q",
-  19: "R",
-  20: "S",
-  21: "T",
-  22: "U",
-  23: "V",
-  24: "W",
-  25: "X",
-  26: "Y",
-  27: "Z",
-};
-
 // Añadir una imagen a la clase de entrenamiento
 const addImageExample = async (classId) => {
-  if (isTraining) {
-    const img = await webCam.capture();
-    const activation = model.infer(img, "conv_preds");
-    classifier.addExample(activation, classId);
-    img.dispose();
-  } else {
-    alert('El modelo no se está entrenando, presiona el botón "Entrenar"');
+  console.log(classId);
+  if (!isTraining) {
+    return alert(
+      'El modelo no se está entrenando, presiona el botón "Entrenar" para entrenar el modelo.'
+    );
   }
+
+  const img = await webCam.capture();
+  const activation = model.infer(img, "conv_preds");
+  classifier.addExample(activation, classId);
+  img.dispose();
 };
 
 // Función principal
@@ -60,7 +34,7 @@ const app = async () => {
     const webCamElement = document.getElementById("webcam");
     webCam = await tf.data.webcam(webCamElement);
 
-    // Carga un modelo pre-entrenado
+    // Carga el modelo k-NN
     model = await mobilenet.load();
 
     const interval = setInterval(async () => {
@@ -73,17 +47,20 @@ const app = async () => {
 
         // Mostrar la predicción
         document.getElementById("result").innerHTML = `
-          <p><b>Letra:</b> ${classes[result.label]}</p>
-          <p><b>Probabilidad:</b> ${result.confidences[result.label]}</p>
+          <p class="result-label">${result.label}</p>
+          <p class="result-probability"><b>Probabilidad:</b> ${parseInt(
+            result.confidences[result.label] * 100
+          )}%</p>
           `;
+
+        console.log(result.label);
 
         // Liberar la memoria
         img.dispose();
       } else {
         // Mostrar un mensaje mientras no haya modelo
         document.getElementById("result").innerHTML = `
-          <p>Modelo de entrenamiento no disponible. Por favor, 
-          entrena o carga un modelo antes de intentar una predicción.</p>
+          <p>No hay un modelo cargado. Por favor, entrenar el modelo o cargar uno existente desde un archivo JSON.</p>
         `;
       }
     }, 500); // Hace una predicción cada 0.5 segundos
@@ -98,11 +75,11 @@ const app = async () => {
 };
 
 // Eventos de click en los botones del alfabeto
-const buttons = document.getElementsByClassName("training-btn");
+const buttons = document.getElementsByClassName("btnAlph");
 for (let i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener("click", () => {
-    // Obtiene la posición del valor y lo agrega como ejemplo
-    const classId = buttons[i].getAttribute("data-position");
+    // Obtiene la letra del botón y la añade al modelo
+    const classId = buttons[i].textContent;
     addImageExample(classId);
   });
 }
@@ -119,7 +96,8 @@ btnLoad.addEventListener("click", async () => {
       try {
         const jsonContent = await file.text(); // Leer el archivo
         const loadedDataset = JSON.parse(jsonContent); // Convertir a JSON
-        const tensorObj = Object.entries(loadedDataset).reduce( // Convertir a tensores
+        const tensorObj = Object.entries(loadedDataset).reduce(
+          // Convertir a tensores
           (obj, [classId, data]) => {
             obj[classId] = tf.tensor(data.data, data.shape, data.dtype);
             return obj;
@@ -143,8 +121,9 @@ btnLoad.addEventListener("click", async () => {
 // Entrenar el modelo
 btnTraining.addEventListener("click", () => {
   if (!model) {
-    alert("El modelo no se ha cargado, por favor espera unos segundos");
-    return;
+    return alert(
+      "El clasificador no está cargado. Espera unos segundos e intenta de nuevo."
+    );
   }
 
   // Activar el modo de entrenamiento
@@ -156,44 +135,60 @@ btnTraining.addEventListener("click", () => {
 
 // Guardar el modelo
 btnSave.addEventListener("click", async () => {
-  if (isTraining) {
-    // Guardar el modelo solo si está en modo de entrenamiento.
-    const dataset = classifier.getClassifierDataset();
-
-    // Ajustar la estructura del dataset
-    const adjustedDataset = Object.entries(dataset).reduce(
-      (obj, [classId, data]) => {
-        obj[classId] = {
-          data: Array.from(data.dataSync()), // Convertir a un array
-          shape: data.shape,
-          dtype: data.dtype,
-        };
-        return obj;
-      },
-      {}
+  if (!isTraining) {
+    return alert(
+      'El modelo no se está entrenando, presiona el botón "Entrenar" para entrenar el modelo.'
     );
-
-    const jsonDataset = JSON.stringify(adjustedDataset); // Convertir a JSON
-
-    // Crear un Blob con el JSON
-    const blob = new Blob([jsonDataset], { type: "application/json" });
-
-    // Crear un enlace de descarga
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "modelo_entrenado.json";
-
-    // Simular un clic en el enlace para iniciar la descarga
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
   }
+
+  const dataset = classifier.getClassifierDataset();
+
+  // Ajustar la estructura del dataset
+  const adjustedDataset = Object.entries(dataset).reduce(
+    (obj, [classId, data]) => {
+      obj[classId] = {
+        data: Array.from(data.dataSync()), // Convertir a un array
+        shape: data.shape,
+        dtype: data.dtype,
+      };
+      return obj;
+    },
+    {}
+  );
+
+  const jsonDataset = JSON.stringify(adjustedDataset); // Convertir a JSON
+
+  // Crear un Blob con el JSON
+  const blob = new Blob([jsonDataset], { type: "application/json" });
+
+  // Crear un enlace de descarga
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "modelo_entrenado.json";
+
+  // Simular un clic en el enlace para iniciar la descarga
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 
   // Desactivar el modo de entrenamiento.
   isTraining = false;
   btnTraining.innerText = "Entrenar";
   btnTraining.disabled = false;
   btnSave.disabled = true;
+});
+
+// Evento de click en el botón de la palabra completa
+btnInput.addEventListener("click", () => {
+  // Obtener la palabra del input
+  const fieldInput = document.getElementById("fieldInput");
+  const word = fieldInput.value;
+
+  if (word === "") {
+    return alert("Por favor, ingresa una palabra.");
+  }
+
+  addImageExample(word); // Añadir la palabra al modelo
 });
 
 app();
