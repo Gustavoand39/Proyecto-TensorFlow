@@ -14,7 +14,6 @@ let isTraining = false;
 
 // Añadir una imagen a la clase de entrenamiento
 const addImageExample = async (classId) => {
-  console.log(classId);
   if (!isTraining) {
     return alert(
       'El modelo no se está entrenando, presiona el botón "Entrenar" para entrenar el modelo.'
@@ -53,14 +52,12 @@ const app = async () => {
           )}%</p>
           `;
 
-        console.log(result.label);
-
         // Liberar la memoria
         img.dispose();
       } else {
         // Mostrar un mensaje mientras no haya modelo
         document.getElementById("result").innerHTML = `
-          <p>No hay un modelo cargado. Por favor, entrenar el modelo o cargar uno existente desde un archivo JSON.</p>
+          <p>No hay un modelo cargado. Por favor, entrena el modelo o carga uno existente desde un archivo JSON.</p>
         `;
       }
     }, 500); // Hace una predicción cada 0.5 segundos
@@ -178,7 +175,7 @@ btnSave.addEventListener("click", async () => {
   btnSave.disabled = true;
 });
 
-// Evento de click en el botón de la palabra completa
+// Añadir una palabra al modelo
 btnInput.addEventListener("click", () => {
   // Obtener la palabra del input
   const fieldInput = document.getElementById("fieldInput");
