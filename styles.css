@@ -43,13 +43,13 @@ body {
 
 .result-label {
   font-weight: bold;
-  font-size: 5rem;
+  font-size: 4rem;
   text-align: center;
   margin-bottom: 1rem;
 }
 
 .result-probability {
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -72,11 +72,10 @@ body {
 
 .btn {
   padding: 15px 20px;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   cursor: pointer;
   border: 1px solid #34495e;
   border-radius: 5px;
-  margin: 5px;
   transition: all 0.3s ease;
   outline: none;
 }
@@ -119,7 +118,7 @@ body {
 
 .training-buttons {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-gap: 1rem;
 }
 
@@ -129,7 +128,7 @@ body {
 }
 
 .alph-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -144,7 +143,7 @@ body {
 
 .fieldInput {
   flex: 3;
-  padding: 1rem;
+  padding: 0.8rem;
   font-size: 1.5rem;
   border: 1px solid #34495e;
   border-radius: 5px;
@@ -184,23 +183,23 @@ body {
 }
 
 .instr-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
 .instr-subtitle {
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
 }
 
 .instr-text {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   line-height: 1.7;
 }
 
 .instr-steps {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
